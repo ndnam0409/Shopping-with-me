@@ -1,13 +1,16 @@
 package com.dailycodework.shoppingwithme.service.product;
 
 import com.dailycodework.shoppingwithme.model.Product;
+import com.dailycodework.shoppingwithme.request.AddProductRequest;
+import com.dailycodework.shoppingwithme.request.ProductUpdateRequest;
+
 import java.util.List;
 
 public interface IProductService {
-    Product addProduct(Product product);
+    Product addProduct(AddProductRequest request);
     Product getProductById(Long id);
     void deleteProductById(Long id);
-    void updateProduct(Product product, Long id);
+    Product updateProduct(ProductUpdateRequest request, Long Id);
     List<Product> getAllProducts();
     List<Product> getProductsByCategory(String category);
     List<Product> getProductsByBrand(String brand);
