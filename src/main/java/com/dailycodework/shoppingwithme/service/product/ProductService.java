@@ -4,7 +4,7 @@ import com.dailycodework.shoppingwithme.model.Product;
 import com.dailycodework.shoppingwithme.model.Category;
 import com.dailycodework.shoppingwithme.repository.CategoryRepository;
 import com.dailycodework.shoppingwithme.repository.ProductRepository;
-import com.dailycodework.shoppingwithme.exception.ProductNotFoundException;
+import com.dailycodework.shoppingwithme.exception.ResourceNotFoundException;
 import com.dailycodework.shoppingwithme.request.AddProductRequest;
 import com.dailycodework.shoppingwithme.request.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
@@ -43,13 +43,13 @@ public class ProductService implements IProductService {
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(()-> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found!"));
     }
 
     @Override
     public void deleteProductById(Long id) {
         productRepository.findById(id)
-                .ifPresentOrElse(productRepository::delete, ()-> {throw new ProductNotFoundException("Product not found!");});
+                .ifPresentOrElse(productRepository::delete, ()-> {throw new ResourceNotFoundException("Product not found!");});
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ProductService implements IProductService {
         return productRepository.findById(productId)
                 .map(existingProduct -> updateExistingProduct(existingProduct,request))
                 .map(productRepository :: save)
-                .orElseThrow(()-> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found!"));
     }
 
     private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request) {
